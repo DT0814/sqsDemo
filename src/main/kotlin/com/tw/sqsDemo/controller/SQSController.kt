@@ -15,17 +15,18 @@ import java.util.*
 class SQSController {
     @Autowired
     private lateinit var queueMessagingTemplate: QueueMessagingTemplate
-    val headers: MutableMap<String, Any> = hashMapOf("message-group-id" to "1", "message-deduplication-id" to UUID.randomUUID().toString())
 
 
     @GetMapping("/send/Initiator")
     fun sendInitiator() {
+        val headers: MutableMap<String, Any> = hashMapOf("message-group-id" to "1", "message-deduplication-id" to UUID.randomUUID().toString())
+
         queueMessagingTemplate.convertAndSend("Initiator-sqs.fifo", "this is a Initiator", headers)
     }
 
     @GetMapping("/send/report")
     fun sendReport() {
-
+        val headers: MutableMap<String, Any> = hashMapOf("message-group-id" to "1", "message-deduplication-id" to UUID.randomUUID().toString())
         queueMessagingTemplate
                 .convertAndSend("merchant-transaction-report-sqs.fifo",
                         "this is a report", headers)
